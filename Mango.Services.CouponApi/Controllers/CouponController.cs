@@ -40,8 +40,8 @@ namespace Mango.Services.CouponApi.Controllers
             return _responseDto;
         }
         [HttpGet]
-        [Route("{id:int}")]
-        public ResponseDto Get(int id)
+        [Route("GetById/{id:int}")]
+        public ResponseDto GetById(int id)
 
         {
             try
@@ -54,6 +54,26 @@ namespace Mango.Services.CouponApi.Controllers
             {
                 _responseDto.IsSuccess=false; 
                 _responseDto.Message=ex.Message;
+
+            }
+            return _responseDto;
+
+        }
+        [HttpGet]
+        [Route("GetByCode/{code}")]
+        public ResponseDto GetByCode(string code)
+
+        {
+            try
+            {
+                Coupon obj = _dbContext.coupons.First(x => x.CouponCode == code);
+                _responseDto.Result = _mapper.Map<CouponDto>(obj);
+
+            }
+            catch (Exception ex)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = ex.Message;
 
             }
             return _responseDto;
