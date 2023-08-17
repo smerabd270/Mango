@@ -86,7 +86,6 @@ namespace Mango.Services.CouponApi.Controllers
 
         }
         [HttpPost]
-        [Route("GetByCode/{code}")]
         public ResponseDto Post([FromBody] CouponDto couponDto)
 
         {
@@ -96,7 +95,8 @@ namespace Mango.Services.CouponApi.Controllers
                 _dbContext.coupons.Add(obj);
                 _dbContext.SaveChanges();
                 _responseDto.Result = _mapper.Map<CouponDto>(obj);
-
+                _responseDto.IsSuccess = true;
+                _responseDto.Message = "add Success";
 
             }
 
