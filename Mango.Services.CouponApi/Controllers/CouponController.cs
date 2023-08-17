@@ -67,9 +67,15 @@ namespace Mango.Services.CouponApi.Controllers
             try
             {
                 Coupon obj = _dbContext.coupons.First(x => x.CouponCode == code);
+                if(obj is null )
+                {
+                    _responseDto.IsSuccess=false;
+                }
                 _responseDto.Result = _mapper.Map<CouponDto>(obj);
 
+
             }
+            
             catch (Exception ex)
             {
                 _responseDto.IsSuccess = false;
@@ -79,5 +85,30 @@ namespace Mango.Services.CouponApi.Controllers
             return _responseDto;
 
         }
+        [HttpPost]
+        [Route("GetByCode/{code}")]
+        public ResponseDto Post([FromBody] CouponDto couponDto)
+
+        {
+            try
+            {
+                Coupon obj =_mapper.Map<Coupon>(couponDto);
+                _dbContext.coupons.Add(obj);
+                _dbContext.SaveChanges();
+                _responseDto.Result = _mapper.Map<CouponDto>(obj);
+
+
+            }
+
+            catch (Exception ex)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = ex.Message;
+
+            }
+            return _responseDto;
+
+        }
+
     }
 }
