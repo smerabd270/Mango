@@ -110,5 +110,31 @@ namespace Mango.Services.CouponApi.Controllers
 
         }
 
+        [HttpPut]
+        public ResponseDto Put([FromBody] CouponDto couponDto)
+
+        {
+            try
+            {
+                Coupon obj = _mapper.Map<Coupon>(couponDto);
+                _dbContext.coupons.Update(obj);
+                _dbContext.SaveChanges();
+                _responseDto.Result = _mapper.Map<CouponDto>(obj);
+                _responseDto.IsSuccess = true;
+                _responseDto.Message = "update Success";
+
+            }
+
+            catch (Exception ex)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = ex.Message;
+
+            }
+            return _responseDto;
+
+        }
+
+
     }
 }
