@@ -1,7 +1,19 @@
+using Mang.Web.Services;
+using Mang.Web.Services.Iservices;
+using Mang.Web.Utility;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<ICouponService, CouponService>();
+builder.Services.AddScoped<ICouponService, CouponService>();
+builder.Services.AddScoped<IBaseService, BaseService>();
+
+
+SD.CouponApiBase = builder.Configuration["ServiceUrls:CouponApi"];
 
 var app = builder.Build();
 
