@@ -65,7 +65,7 @@ namespace Mang.Web.Controllers
                 if (response != null && response.IsSuccess == true)
                 {
                     CouponDto? model = JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(response.Result));
-                    return View(model);
+                    return RedirectToAction(nameof(CouponIndex));
                 }
             }
             return View(couponDto);
