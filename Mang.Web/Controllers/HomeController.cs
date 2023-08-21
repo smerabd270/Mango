@@ -15,6 +15,7 @@ namespace Mang.Web.Controllers
 
         public IActionResult Index()
         {
+            //nnnnnnnnnnnnnnnnnnnnnnnnn
             return View();
         }
 
