@@ -1,5 +1,4 @@
-﻿using Mang.Services.CouponApi.Models.Dto;
-using Mang.Web.Models;
+﻿using Mang.Web.Models;
 using Mang.Web.Services.Iservices;
 using Mang.Web.Utility;
 
@@ -32,7 +31,11 @@ namespace Mang.Web.Services
         }
 
         public async  Task<ResponseDto?> GetAllCouponAsync()
+        { var k= await _baseService.SendASync(new RequestDto()
         {
+            ApiType = SD.ApiType.GET,
+            Url = SD.CouponApiBase + "/api/coupon"
+        });
             return await _baseService.SendASync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,

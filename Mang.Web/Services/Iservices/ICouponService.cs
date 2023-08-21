@@ -1,5 +1,4 @@
-﻿using Mang.Services.CouponApi.Models.Dto;
-using Mang.Web.Models;
+﻿using Mang.Web.Models;
 
 namespace Mang.Web.Services.Iservices
 {

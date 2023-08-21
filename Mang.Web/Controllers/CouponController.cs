@@ -1,5 +1,4 @@
-﻿using Mang.Services.CouponApi.Models.Dto;
-using Mang.Web.Models;
+﻿using Mang.Web.Models;
 using Mang.Web.Services.Iservices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -24,6 +23,10 @@ namespace Mang.Web.Controllers
                 list= JsonConvert.DeserializeObject<List<CouponDto>>(Convert.ToString(response.Result));
             }
             return View(list);
+        }
+        public async Task<IActionResult> CouponCreate()
+        {
+            return View();
         }
     }
 }

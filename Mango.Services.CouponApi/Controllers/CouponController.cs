@@ -27,6 +27,7 @@ namespace Mango.Services.CouponApi.Controllers
             try
             {
                 IEnumerable<Coupon> objList = _dbContext.coupons.ToList();
+
                 _responseDto.Result= _mapper.Map<IEnumerable<CouponDto>>(objList);
 
             }
