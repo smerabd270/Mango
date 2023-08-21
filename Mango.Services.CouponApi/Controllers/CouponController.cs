@@ -137,7 +137,9 @@ namespace Mango.Services.CouponApi.Controllers
         }
 
         [HttpDelete]
+        [Route("{id:int}")]
         public ResponseDto Delete(int id)
+            
 
         {
             try

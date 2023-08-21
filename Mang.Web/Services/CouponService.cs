@@ -57,7 +57,7 @@ namespace Mang.Web.Services
             return await _baseService.SendASync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.CouponApiBase + "/api/coupon/" + id
+                Url = SD.CouponApiBase + "/api/coupon/GetById/" + id
             });
         }
 

@@ -17,10 +17,10 @@ namespace Mang.Web.Controllers
         public async Task<IActionResult> CouponIndex()
         {
             List<CouponDto>? list = new();
-            ResponseDto? response = await  _couponService.GetAllCouponAsync();
-            if(response != null && response.IsSuccess== true )
+            ResponseDto? response = await _couponService.GetAllCouponAsync();
+            if (response != null && response.IsSuccess == true)
             {
-                list= JsonConvert.DeserializeObject<List<CouponDto>>(Convert.ToString(response.Result));
+                list = JsonConvert.DeserializeObject<List<CouponDto>>(Convert.ToString(response.Result));
             }
             return View(list);
         }
@@ -28,5 +28,49 @@ namespace Mang.Web.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> CouponCreate( CouponDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                ResponseDto? response= await _couponService.CreateCouponAsync(model);
+                if (response != null && response.IsSuccess == true)
+                {
+                    return RedirectToAction(nameof(CouponIndex));   
+                }
+            }
+            return View(model);
+
+        }
+        public async Task<IActionResult> CouponDelete( int CouponId)
+        {
+            if (ModelState.IsValid)
+            {
+                ResponseDto? response = await _couponService.GetCouponByIdAsync(CouponId);
+                if (response != null && response.IsSuccess == true)
+                {
+                    CouponDto? model = JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(response.Result));
+                    return View(model);
+                }
+            }
+            return NotFound();
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> CouponDelete(CouponDto couponDto)
+        {
+            if (couponDto.CouponId!= 0)
+            {
+                ResponseDto? response = await _couponService.DeleteCouponAsync(couponDto.CouponId);
+                if (response != null && response.IsSuccess == true)
+                {
+                    CouponDto? model = JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(response.Result));
+                    return View(model);
+                }
+            }
+            return View(couponDto);
+
+        }
+
     }
 }
