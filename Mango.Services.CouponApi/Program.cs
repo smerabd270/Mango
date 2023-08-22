@@ -15,7 +15,11 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplictionDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefualtConnection")));
+builder.Services.AddDbContext<ApplictionDbContext>
+     (options => 
+        {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefualtConnection"));
+        });
 
 var app = builder.Build();
 
