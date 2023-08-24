@@ -17,6 +17,7 @@ builder.Services.AddDbContext<ApplictionDbContext>
          options.UseSqlServer(builder.Configuration.GetConnectionString("DefualtConnection"));
      });
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplictionDbContext>().AddDefaultTokenProviders();
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
 
 
 var app = builder.Build();
