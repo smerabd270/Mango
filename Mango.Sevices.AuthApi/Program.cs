@@ -1,5 +1,7 @@
 using Mango.Sevices.AuthApi.Data;
 using Mango.Sevices.AuthApi.Models;
+using Mango.Sevices.AuthApi.Services;
+using Mango.Sevices.AuthApi.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,7 @@ builder.Services.AddDbContext<ApplictionDbContext>
      {
          options.UseSqlServer(builder.Configuration.GetConnectionString("DefualtConnection"));
      });
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplictionDbContext>().AddDefaultTokenProviders();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
 

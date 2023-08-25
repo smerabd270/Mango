@@ -19,10 +19,34 @@ namespace Mango.Sevices.AuthApi.Services
             _roleManger = roleManger;
 
         }
-        public Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
+        public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
+            var user= _db.ApplicationUsers.FirstOrDefault(x=>x.UserName.ToLower() == loginRequestDto.UserName.ToLower());
+            bool isValid = await _userManger.CheckPasswordAsync( user,loginRequestDto.Password);
+            if (user == null || !isValid)
+            {
+                return new LoginResponseDto()
+                {
+                    User = null,
+                    Token = ""
+                };
+            }
+                //if user found 
+                UserDto userDto = new UserDto()
+                {
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Id = user.Id,
+                    Name = user.Name
+                };
             
-            throw new NotImplementedException();
+                LoginResponseDto loginResponseDto = new LoginResponseDto()
+                {
+                    User= userDto,
+                    Token=""
+                };
+
+            return loginResponseDto;
         }
 
         public  async Task<string> Rejester(RegeistrationResquestDto regeistrationResquestDto)
