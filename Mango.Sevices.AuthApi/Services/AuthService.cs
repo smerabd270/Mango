@@ -9,20 +9,38 @@ namespace Mango.Sevices.AuthApi.Services
     public class AuthService : IAuthService
     {
         private readonly ApplictionDbContext _db;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly UserManager<ApplicationUser> _userManger;
         private readonly RoleManager<IdentityRole> _roleManger;
         public AuthService(ApplictionDbContext db, UserManager<ApplicationUser> userManger,
-                            RoleManager<IdentityRole> roleManger)
+                            RoleManager<IdentityRole> roleManger, IJwtTokenGenerator jwtTokenGenerator)
         {
             _db = db;
             _userManger = userManger;
             _roleManger = roleManger;
+            _jwtTokenGenerator = jwtTokenGenerator;
 
         }
+
+        public async Task<bool> AssignRole(string email, string roleName)
+        {
+            var user = _db.Users.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+            if (user != null)
+            {
+                if(!_roleManger.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+                {
+                    _roleManger.CreateAsync( new IdentityRole( roleName)).GetAwaiter().GetResult();
+                }
+                await _userManger.AddToRoleAsync(user, roleName);   
+                return true;
+            }
+            return false;
+        }
+
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
-            var user= _db.ApplicationUsers.FirstOrDefault(x=>x.UserName.ToLower() == loginRequestDto.UserName.ToLower());
-            bool isValid = await _userManger.CheckPasswordAsync( user,loginRequestDto.Password);
+            var user = _db.ApplicationUsers.FirstOrDefault(x => x.UserName.ToLower() == loginRequestDto.UserName.ToLower());
+            bool isValid = await _userManger.CheckPasswordAsync(user, loginRequestDto.Password);
             if (user == null || !isValid)
             {
                 return new LoginResponseDto()
@@ -31,33 +49,34 @@ namespace Mango.Sevices.AuthApi.Services
                     Token = ""
                 };
             }
-                //if user found 
-                UserDto userDto = new UserDto()
-                {
-                    Email = user.Email,
-                    PhoneNumber = user.PhoneNumber,
-                    Id = user.Id,
-                    Name = user.Name
-                };
-            
-                LoginResponseDto loginResponseDto = new LoginResponseDto()
-                {
-                    User= userDto,
-                    Token=""
-                };
+            //if user found 
+            var token = _jwtTokenGenerator.GenerateToken(user);
+            UserDto userDto = new UserDto()
+            {
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Id = user.Id,
+                Name = user.Name
+            };
+
+            LoginResponseDto loginResponseDto = new LoginResponseDto()
+            {
+                User = userDto,
+                Token = token
+            };
 
             return loginResponseDto;
         }
 
-        public  async Task<string> Rejester(RegeistrationResquestDto regeistrationResquestDto)
+        public async Task<string> Rejester(RegeistrationResquestDto regeistrationResquestDto)
         {
             ApplicationUser user = new()
             {
-                Name= regeistrationResquestDto.Name,
-                UserName=regeistrationResquestDto.Email,
-                Email=regeistrationResquestDto.Email,
-                PhoneNumber=regeistrationResquestDto.PhoneNumber,
-                NormalizedUserName=regeistrationResquestDto.Email.ToUpper()
+                Name = regeistrationResquestDto.Name,
+                UserName = regeistrationResquestDto.Email,
+                Email = regeistrationResquestDto.Email,
+                PhoneNumber = regeistrationResquestDto.PhoneNumber,
+                NormalizedUserName = regeistrationResquestDto.Email.ToUpper()
             };
             try
             {
@@ -80,9 +99,9 @@ namespace Mango.Sevices.AuthApi.Services
                     return result.Errors.FirstOrDefault().Description;
                 }
             }
-                    
-                
-            
+
+
+
             catch (Exception ex)
             {
 
