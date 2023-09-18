@@ -14,6 +14,8 @@ builder.Services.AddHttpClient<IAuhtService, AuhtService>();
 //scoped
 builder.Services.AddScoped<IAuhtService, AuhtService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+
 builder.Services.AddScoped<IBaseService, BaseService>();
 
 
