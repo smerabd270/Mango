@@ -1,6 +1,7 @@
 using Mang.Web.Services;
 using Mang.Web.Services.Iservices;
 using Mang.Web.Utility;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +16,14 @@ builder.Services.AddHttpClient<IAuhtService, AuhtService>();
 builder.Services.AddScoped<IAuhtService, AuhtService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
-
 builder.Services.AddScoped<IBaseService, BaseService>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromHours(10);
+        options.LoginPath = "/Auth/Login";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+    });
 
 
 SD.CouponApiBase = builder.Configuration["ServiceUrls:CouponApi"];
@@ -36,6 +43,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
