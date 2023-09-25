@@ -18,7 +18,7 @@ namespace Mang.Web.Services
                 ApiType = SD.ApiType.POST,
                 Data = regeRegistrationDto,
                 Url = SD.AuthApiBase + "/api/Auth/AssignRole"
-            });
+            }, withBearer: false);
         }
 
         public  async Task<ResponseDto?> LoginAsync(LoginRequestDto loginRequestDto)
@@ -28,7 +28,9 @@ namespace Mang.Web.Services
                 ApiType = SD.ApiType.POST,
                 Data = loginRequestDto,
                 Url = SD.AuthApiBase + "/api/Auth/login"
-            });
+            }
+            ,withBearer:false);
+            
         }
 
         public async Task<ResponseDto?> RegisterAsync(RegeistrationResquestDto regeRegistrationDto)
@@ -38,7 +40,7 @@ namespace Mang.Web.Services
                 ApiType = SD.ApiType.POST,
                 Data = regeRegistrationDto,
                 Url = SD.AuthApiBase + "/api/Auth/register"
-            });
+            },withBearer: false);
         }
     }
 }

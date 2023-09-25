@@ -4,6 +4,6 @@ namespace Mang.Web.Services.Iservices
 {
     public interface IBaseService
     {
-        Task<ResponseDto?>SendASync(RequestDto requestDto);
+        Task<ResponseDto?>SendASync(RequestDto requestDto, bool withBearer=true);
     }
 }

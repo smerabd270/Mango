@@ -9,11 +9,13 @@ namespace Mang.Web.Services
     public class BaseService : IBaseService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public BaseService(IHttpClientFactory httpClientFactory)
-        {
-            _httpClientFactory = httpClientFactory;
-        }
-        public async Task<ResponseDto?> SendASync(RequestDto requestDto)
+        private readonly ITokenProvider _tokenProvider;
+		public BaseService(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider = null)
+		{
+			_httpClientFactory = httpClientFactory;
+			_tokenProvider = tokenProvider;
+		}
+		public async Task<ResponseDto?> SendASync(RequestDto requestDto, bool withBearer = true)
         {
             try
             {
@@ -21,6 +23,11 @@ namespace Mang.Web.Services
                 HttpRequestMessage message = new();
                 message.Headers.Add("Accept", "application/json");
                 //Token
+                if(withBearer)
+                {
+                    var token=_tokenProvider.GetToken();
+                    message.Headers.Add("Authorization", $"Bearer {token}");
+                }
                 message.RequestUri = new Uri(requestDto.Url);
                 if (requestDto.Data != null)
                 {
