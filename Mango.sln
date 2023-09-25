@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mango.Services.CouponApi", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mang.Web", "Mang.Web\Mang.Web.csproj", "{070A1813-8F1E-4FB2-902F-4AE13A72DB85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Sevices.AuthApi", "Mango.Sevices.AuthApi\Mango.Sevices.AuthApi.csproj", "{0D02B06B-BAAE-45DD-8DCE-2081EB018D2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mango.Sevices.AuthApi", "Mango.Sevices.AuthApi\Mango.Sevices.AuthApi.csproj", "{0D02B06B-BAAE-45DD-8DCE-2081EB018D2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Services.ProductApi", "Mango.Services.ProductApi\Mango.Services.ProductApi.csproj", "{213B927F-C508-4AA3-944A-A86DA6E9AF76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{0D02B06B-BAAE-45DD-8DCE-2081EB018D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D02B06B-BAAE-45DD-8DCE-2081EB018D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D02B06B-BAAE-45DD-8DCE-2081EB018D2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{213B927F-C508-4AA3-944A-A86DA6E9AF76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213B927F-C508-4AA3-944A-A86DA6E9AF76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213B927F-C508-4AA3-944A-A86DA6E9AF76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213B927F-C508-4AA3-944A-A86DA6E9AF76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{8FA45E75-EFA3-44EC-8EA0-F24C4F21440A} = {13605ABA-DBE7-4C50-9A7F-E36B2FB4BADB}
 		{070A1813-8F1E-4FB2-902F-4AE13A72DB85} = {80FA2715-71CC-4211-8AD0-1D0384AF541A}
 		{0D02B06B-BAAE-45DD-8DCE-2081EB018D2B} = {13605ABA-DBE7-4C50-9A7F-E36B2FB4BADB}
+		{213B927F-C508-4AA3-944A-A86DA6E9AF76} = {13605ABA-DBE7-4C50-9A7F-E36B2FB4BADB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA8567B6-CD0E-46E8-BECD-E9FDD61CB3DC}
