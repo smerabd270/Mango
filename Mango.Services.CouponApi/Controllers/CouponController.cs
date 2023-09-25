@@ -2,6 +2,7 @@
 using Mango.Services.CouponApi.Data;
 using Mango.Services.CouponApi.Models;
 using Mango.Services.CouponApi.Models.Dto;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,8 @@ namespace Mango.Services.CouponApi.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
-    [Authorize]
-    public class CouponController : ControllerBase
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	public class CouponController : ControllerBase
     {
         private readonly ApplictionDbContext _dbContext;
         private readonly ResponseDto _responseDto;
