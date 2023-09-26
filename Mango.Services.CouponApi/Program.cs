@@ -49,7 +49,7 @@ builder.Services.AddDbContext<ApplictionDbContext>
         {
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefualtConnection"));
         });
-builder.AddAppAuthentication();
+builder.AddAppAuthetication();
 builder.Services.AddAuthorization();
 var app = builder.Build();
 
