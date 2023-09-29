@@ -15,6 +15,8 @@ builder.Services.AddHttpClient<IAuhtService, AuhtService>();
 //scoped
 builder.Services.AddScoped<IAuhtService, AuhtService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -28,6 +30,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 SD.CouponApiBase = builder.Configuration["ServiceUrls:CouponApi"];
 SD.AuthApiBase = builder.Configuration["ServiceUrls:AuthApi"];
+SD.ProductApiBase = builder.Configuration["ServiceUrls:ProductApi"];
+
 
 var app = builder.Build();
 
