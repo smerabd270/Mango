@@ -4,6 +4,7 @@ namespace Mango.Services.ProductApi.Models.Dto
 {
 	public class ProductDto
 	{
+		public int ProductId { get; set; }
 		public string Name { get; set; }
 		[Range(1, 1000)]
 		public double Price { get; set; }
