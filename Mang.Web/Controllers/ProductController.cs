@@ -14,7 +14,7 @@ namespace Mang.Web.Controllers
             _productService = productService;
         }
 
-        public async Task<IActionResult> productIndex()
+        public async Task<IActionResult> ProductIndex()
         {
             List<ProductDto>? list = new();
             ResponseDto? response = await _productService.GetAllProductAsync();
@@ -24,25 +24,25 @@ namespace Mang.Web.Controllers
             }
             return View(list);
         }
-        public async Task<IActionResult> productCreate()
+        public async Task<IActionResult> ProductCreate()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> productCreate(ProductDto model)
+        public async Task<IActionResult> ProductCreate(ProductDto model)
         {
             if (ModelState.IsValid)
             {
                 ResponseDto? response = await _productService.CreateProductAsync(model);
                 if (response != null && response.IsSuccess == true)
                 {
-                    return RedirectToAction(nameof(productIndex));
+                    return RedirectToAction(nameof(ProductIndex));
                 }
             }
             return View(model);
 
         }
-        public async Task<IActionResult> productDelete(int productId)
+        public async Task<IActionResult> ProductDelete(int productId)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace Mang.Web.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> productDelete(ProductDto productDto)
+        public async Task<IActionResult> ProductDelete(ProductDto productDto)
         {
             if (productDto.ProductId != 0)
             {
@@ -65,7 +65,7 @@ namespace Mang.Web.Controllers
                 if (response != null && response.IsSuccess == true)
                 {
                     ProductDto? model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
-                    return RedirectToAction(nameof(productIndex));
+                    return RedirectToAction(nameof(ProductIndex));
                 }
             }
             return View(productDto);
