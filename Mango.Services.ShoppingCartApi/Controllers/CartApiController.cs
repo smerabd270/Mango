@@ -31,7 +31,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
 				var cartHeaderFromDb = await _dbContext.cartHeaders.FirstOrDefaultAsync(x => x.UserId == cartDto.CartHeader.UserId);
 				if(cartHeaderFromDb == null)
                 {
-					CartHeader cartHeader=_mapper.Map<CartHeader>(cartDto);	
+					CartHeader cartHeader=_mapper.Map<CartHeader>(cartDto);	//
 					_dbContext.cartHeaders.Add(cartHeader);
 				 await	_dbContext.SaveChangesAsync();
 					cartDto.CartDetails.First().CartHeaderId = cartHeader.CartHeaderId;
