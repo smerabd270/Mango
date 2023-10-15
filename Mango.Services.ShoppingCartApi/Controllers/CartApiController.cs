@@ -48,13 +48,22 @@ namespace Mango.Services.ShoppingCartApi.Controllers
 						u.CartHeaderId==cartHeaderFromDb.CartHeaderId);
 					if(cartDetailsFromDb == null)
                     {
-
-                    }
+						cartDto.CartDetails.First().CartHeaderId = cartDetailsFromDb.CartHeaderId;
+						_dbContext.cartDetails.Add(_mapper.Map<CartDetails>(cartDto));
+						await _dbContext.SaveChangesAsync();
+					}
                     else 
 					{
+						cartDto.CartDetails.First().Count += cartDetailsFromDb.Count;
+						cartDto.CartDetails.First().CartHeaderId += cartDetailsFromDb.CartHeaderId;
+						cartDto.CartDetails.First().CartDetailsId += cartDetailsFromDb.CartDetailsId;
+						_dbContext.cartDetails.Update(_mapper.Map<CartDetails>(cartDto));
+						await _dbContext.SaveChangesAsync();
+
 					}
 
 				}
+				_responseDto.Result = cartDto;
 
             }
 			catch (Exception ex)
@@ -63,7 +72,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
 				_responseDto.IsSuccess=false;
 	
             }
-			return null;
+			return _responseDto;
         }
 		}
 }
