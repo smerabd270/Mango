@@ -5,6 +5,7 @@ using Mango.Services.ShoppingCartApi.Models.Dto;
 using Mango.Services.ShoppingCartApi.Service.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mango.Services.ShoppingCartApi.Controllers
@@ -27,7 +28,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
             _response = new ResponseDto();
             _mapper = mapper;
             _productService = productService;
-            _couponService= couponService;
+            _couponService = couponService;
         }
         [HttpPost("CartUpsert")]
         public async Task<ResponseDto> CartUpsert(CartDto cartDto)
@@ -124,7 +125,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
                 IEnumerable<ProductDto> productDtos = await _productService.GetProducts();
                 foreach (var item in cart.CartDetails)
                 {
-                    item.Product=productDtos.FirstOrDefault(u=>u.ProductId==item.ProductId);
+                    item.Product = productDtos.FirstOrDefault(u => u.ProductId == item.ProductId);
                     cart.CartHeader.CartTotal += (item.Count * item.Product.Price);
                 }
                 //applay copoun if any
@@ -144,6 +145,24 @@ namespace Mango.Services.ShoppingCartApi.Controllers
             {
                 _response.Message = ex.Message.ToString();
                 _response.IsSuccess = false;
+            }
+            return _response;
+        }
+        [HttpPost]
+        public async Task<object> ApplyCoupon([FromBody] CartDto cartDto)
+        {
+            try
+            {
+                var cartFromDb = await _db.cartHeaders.FirstAsync(x => x.UserId == cartDto.CartHeader.UserId);
+                cartFromDb.CouponCode = cartDto.CartHeader.CouponCode;
+                _db.cartHeaders.Update(cartFromDb);
+                await _db.SaveChangesAsync();
+                _response.Result = true;
+            }
+            catch (Exception exp)
+            {
+                _response.Result = false;
+                _response.Message = exp.Message;
             }
             return _response;
         }

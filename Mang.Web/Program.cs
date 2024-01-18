@@ -30,6 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 SD.CouponApiBase = builder.Configuration["ServiceUrls:CouponApi"];
 SD.AuthApiBase = builder.Configuration["ServiceUrls:AuthApi"];
+SD.ShoppingCartApiBase = builder.Configuration["ServiceUrls:ShoppingCartApi"];
 SD.ProductApiBase = builder.Configuration["ServiceUrls:ProductApi"];
 
 
