@@ -11,11 +11,16 @@ builder.Services.AddHttpContextAccessor();
 //http client
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<ICouponService, CouponService>();
+builder.Services.AddHttpClient<IProductService, ProductService>();
 builder.Services.AddHttpClient<IAuhtService, AuhtService>();
+builder.Services.AddHttpClient<ICartService, CartService>();
+
 //scoped
 builder.Services.AddScoped<IAuhtService, AuhtService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
+
 
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<IBaseService, BaseService>();
